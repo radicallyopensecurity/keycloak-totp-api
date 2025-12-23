@@ -130,7 +130,7 @@ class TOTPResourceApi(
                 .build()
         }
 
-        val totpCredentialModel = OTPCredentialModel.createFromPolicy(realm, secret, request.deviceName)
+        val totpCredentialModel = OTPCredentialModel.createTOTP(request.encodedSecret, 6, 30, "HmacSHA1", "BASE32")
         if (!CredentialHelper.createOTPCredential(session, realm, user, request.initialCode, totpCredentialModel)) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                 .entity(CommonApiResponse("Failed to create TOTP credential")).build()
