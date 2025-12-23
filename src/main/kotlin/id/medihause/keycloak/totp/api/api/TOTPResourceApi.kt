@@ -115,10 +115,6 @@ class TOTPResourceApi(
         val encodedTOTP = request.encodedSecret
         val secret = String(Base32.decode(encodedTOTP))
 
-        if (secret.length != totpSecretLength) {
-            return Response.status(Response.Status.BAD_REQUEST).entity(CommonApiResponse("Invalid secret")).build()
-        }
-
         val realm = session.context.realm
         val credentialModel = user.credentialManager().getStoredCredentialByNameAndType(
             request.deviceName,
